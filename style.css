@@ -6,3 +6,12 @@ Author: Laureline Auger
 Template: inspiro
 Version: 1.0
 */
+
+/* Fixe la hauteur des images du portfolio */
+.portfolio-archive .portfolio_item img {
+    height: 300px;       /* ajuste la hauteur selon ton design */
+    width: 100%;         /* occupe toute la largeur du conteneur */
+    object-fit: cover;   /* recadre l'image sans la déformer */
+    display: block;      /* supprime les espaces blancs sous l'image */
+}
+
