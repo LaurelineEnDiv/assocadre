@@ -3,3 +3,54 @@ function inspiro_child_enqueue_styles() {
     wp_enqueue_style( 'inspiro-parent-style', get_template_directory_uri() . '/style.css' );
 }
 add_action( 'wp_enqueue_scripts', 'inspiro_child_enqueue_styles' );
+
+//////// LISTE DES PDF//////////
+function liste_documents_shortcode() {
+
+    ob_start();
+
+    $args = array(
+        'post_type'      => 'document',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC'
+    );
+
+    $documents = new WP_Query($args);
+
+    if ( $documents->have_posts() ) : ?>
+
+        <div class="liste-documents">
+            <ul>
+
+                <?php while ( $documents->have_posts() ) : $documents->the_post(); ?>
+
+                    <?php $pdf = get_field('fichier_pdf'); ?>
+
+                    <li class="item-document">
+                        <h3>
+                            <a href="<?php echo esc_url($pdf); ?>" target="_blank">
+                                <?php the_title(); ?>
+                            </a>
+                        </h3>
+
+                        <?php $auteur = get_field('auteur'); ?>
+                            <?php if ($auteur) : ?>
+                                <p class="document-auteur"><strong>Auteur :</strong> <?php echo $auteur; ?></p>
+                        <?php endif; ?>
+                    </li>
+
+                <?php endwhile; ?>
+
+            </ul>
+        </div>
+
+        <?php wp_reset_postdata();
+
+    else :
+        echo '<p>Aucun document disponible pour le moment.</p>';
+    endif;
+
+    return ob_get_clean();
+}
+add_shortcode('liste_documents', 'liste_documents_shortcode');
