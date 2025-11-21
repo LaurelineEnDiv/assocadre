@@ -5,6 +5,7 @@ function inspiro_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'inspiro_child_enqueue_styles' );
 
 //////// LISTE DES PDF//////////
+/////// LISTE DES PDF//////////
 function liste_documents_shortcode() {
 
     ob_start();
@@ -20,23 +21,23 @@ function liste_documents_shortcode() {
 
     if ( $documents->have_posts() ) : ?>
 
-        <div class="liste-documents">
-            <ul>
+        <div class="articles-grid">
+            <ul class="articles-list">
 
                 <?php while ( $documents->have_posts() ) : $documents->the_post(); ?>
 
                     <?php $pdf = get_field('fichier_pdf'); ?>
+                    <?php $auteur = get_field('auteur'); ?>
 
                     <li class="item-document">
-                        <h3>
+                        <h3 class="document-titre">
                             <a href="<?php echo esc_url($pdf); ?>" target="_blank">
                                 <?php the_title(); ?>
                             </a>
                         </h3>
 
-                        <?php $auteur = get_field('auteur'); ?>
-                            <?php if ($auteur) : ?>
-                                <p class="document-auteur"><strong>Auteur :</strong> <?php echo $auteur; ?></p>
+                        <?php if ($auteur) : ?>
+                            <p class="document-auteur"><strong>Auteur :</strong> <?php echo $auteur; ?></p>
                         <?php endif; ?>
                     </li>
 
@@ -54,6 +55,7 @@ function liste_documents_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('liste_documents', 'liste_documents_shortcode');
+
 
 // === Shortcode Bibliographie === //
 // ===== Shortcode Bibliographie ===== //

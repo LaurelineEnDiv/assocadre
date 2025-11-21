@@ -15,47 +15,65 @@ Version: 1.0
     display: block;      
 }
 
-/******** Articles et Dossiers ***********/
-.entry-content ul li {
-    list-style: none;
+/************* Articles & Dossiers — Style cartes *************/
+.entry-content ul li { list-style: none; }
+
+.articles-grid {
+    margin-top: 30px;
 }
 
-/* Élément document */
+.articles-list {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+}
+
 .item-document {
-    background: #f8f8f8;
-    padding: 18px 22px;
-    margin-bottom: 18px;
-    border: 1px solid #e1e1e1;
+    background: #ffffff;
+    padding: 22px 24px;
+    border: 1px solid #e3e3e3;
     border-radius: 12px;
-    transition: all 0.25s ease;
+    transition: all .28s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
-/* Effet hover moderne */
 .item-document:hover {
     border-color: #076c65;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* Titre lien */
-.item-document h3 a {
+.document-titre {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.document-titre a {
     text-decoration: none;
     font-weight: 600;
-    color: inherit;
-    display: inline-block;
-    transition: color 0.25s ease;
+    color: #1b1b1b;
+    transition: color .25s ease;
 }
 
-/* Couleur au survol */
-.item-document:hover h3 a {
+.item-document:hover .document-titre a {
     color: #076c65;
 }
 
-/* Texte auteur */
 .document-auteur {
-    font-size: 14px;
-    margin-top: 6px;
-    opacity: 0.75;
+    font-size: 15px;
+    opacity: 0.85;
+    margin-top: 8px;
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .articles-list {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /******* Bibliographie*********/
 
