@@ -7,13 +7,16 @@ Template: inspiro
 Version: 1.0
 */
 
-/* Fixe la hauteur des images du portfolio */
-.portfolio-archive .portfolio_item img {
-    height: 300px;       
-    width: 100%;         
-    object-fit: cover;   
-    display: block;      
+
+
+
+/* Fixe la hauteur des images de la galerie photos */
+.wp-block-gallery .wp-block-image img {
+    height: 250px;           /* Ajuste selon la hauteur souhaitée */
+    width: 100%;
+    object-fit: cover;       /* Recadre l'image sans déformation */
 }
+
 
 /************* Articles & Dossiers — Style cartes *************/
 .entry-content ul li { list-style: none; }
@@ -131,7 +134,26 @@ Version: 1.0
     margin: 2px 0;
 }
 
-/* Responsive */
+/***** FOOTER *******/
+
+.footer-widgets {
+    padding-top :20px;
+}
+
+.widget {
+  margin-bottom: 15px;
+}
+
+.site-info {
+  padding: 10px 0;
+}
+
+.site-info a {
+   font-weight: 400; 
+}
+
+
+/************* Responsive **************/
 @media (max-width: 900px) {
     .bibliographie-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -143,3 +165,16 @@ Version: 1.0
         grid-template-columns: 1fr;
     }
 }
+
+
+@media (max-width: 768px) {
+    .footer-widgets.widgets.widget-columns-3 {
+        display: flex;
+        flex-direction: column; /* mettre les widgets en colonne */
+        align-items: center;    /* centre horizontalement */
+        justify-content: center; /* centre verticalement */
+        text-align: center;     /* centre le texte aussi */
+        gap: 10px;              /* espace entre les widgets */
+    }
+}
+

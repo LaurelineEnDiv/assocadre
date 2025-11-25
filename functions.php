@@ -5,7 +5,6 @@ function inspiro_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'inspiro_child_enqueue_styles' );
 
 //////// LISTE DES PDF//////////
-/////// LISTE DES PDF//////////
 function liste_documents_shortcode() {
 
     ob_start();
@@ -57,7 +56,6 @@ function liste_documents_shortcode() {
 add_shortcode('liste_documents', 'liste_documents_shortcode');
 
 
-// === Shortcode Bibliographie === //
 // ===== Shortcode Bibliographie ===== //
 function shortcode_bibliographie() {
 
@@ -111,3 +109,4 @@ function shortcode_bibliographie() {
     return ob_get_clean();
 }
 add_shortcode('bibliographie', 'shortcode_bibliographie');
+
