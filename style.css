@@ -8,6 +8,16 @@ Version: 1.0
 */
 
 
+/**** GÉNÉRAL ********/
+
+.page .has-post-cover .entry-cover, .single-portfolio_item .has-post-cover .entry-cover, .single .has-post-cover .entry-cover {
+  min-height: 250px;
+  max-height: 500px;
+}
+
+  ul {
+    margin-left: 0;
+}
 
 
 /* Fixe la hauteur des images de la galerie photos */
@@ -17,12 +27,71 @@ Version: 1.0
     object-fit: cover;       /* Recadre l'image sans déformation */
 }
 
+/**** FICHE MEMBRE ********/
 
-/************* Articles & Dossiers — Style cartes *************/
-.entry-content ul li { list-style: none; }
+.portfolio-layout-3cols {
+    display: grid;
+    grid-template-columns: 260px 1fr 280px;
+    gap: 40px;
+    align-items: start;
+    margin-top: 40px;
+}
 
-.articles-grid {
-    margin-top: 30px;
+/* Photo ronde */
+.portrait-photo {
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #eee;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Sidebar infos */
+.col-infos ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.col-infos li {
+    margin-bottom: 10px;
+}
+
+.col-infos a {
+    text-decoration: none;
+}
+
+.col-infos a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive mobile */
+@media(max-width: 900px) {
+    .portfolio-layout-3cols {
+        grid-template-columns: 1fr;
+    }
+
+    .col-infos ul {
+        text-align: left;
+        display: inline-block;
+    }
+}
+
+
+
+/************* Articles & Dossiers — style épuré *************/
+
+.articles-list,
+.articles-list ul {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.articles-list li::marker {
+    content: "" !important;
 }
 
 .articles-list {
@@ -30,53 +99,29 @@ Version: 1.0
     margin: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 22px;
+    gap: 26px;
 }
 
+/* Retirer les puces globalement pour la liste */
+.articles-list li {
+    list-style: none;
+}
+
+/* Style minimaliste sans fond ni bordure */
 .item-document {
-    background: #ffffff;
-    padding: 22px 24px;
-    border: 1px solid #e3e3e3;
-    border-radius: 12px;
-    transition: all .28s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+    transition: color .25s ease, transform .25s ease;
 }
 
+.item-document:last-child {
+    border-bottom: none;
+}
+
+/* Animation légère au survol */
 .item-document:hover {
-    border-color: #076c65;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: translateX(4px);
 }
-
-.document-titre {
-    margin: 0 0 10px;
-    font-size: 20px;
-}
-
-.document-titre a {
-    text-decoration: none;
-    font-weight: 600;
-    color: #1b1b1b;
-    transition: color .25s ease;
-}
-
-.item-document:hover .document-titre a {
-    color: #076c65;
-}
-
-.document-auteur {
-    font-size: 15px;
-    opacity: 0.85;
-    margin-top: 8px;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .articles-list {
-        grid-template-columns: 1fr;
-    }
-}
-
 
 /******* Bibliographie*********/
 
@@ -136,12 +181,14 @@ Version: 1.0
 
 /***** FOOTER *******/
 
+
 .footer-widgets {
     padding-top :20px;
 }
 
 .widget {
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .site-info {
@@ -154,6 +201,13 @@ Version: 1.0
 
 
 /************* Responsive **************/
+@media (max-width: 600px) {
+    .page .has-post-cover .entry-cover, .single-portfolio_item .has-post-cover .entry-cover, .single .has-post-cover .entry-cover {
+    max-height: 300px;
+    }
+}
+
+/* Bibliographie */
 @media (max-width: 900px) {
     .bibliographie-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -166,8 +220,8 @@ Version: 1.0
     }
 }
 
-
-@media (max-width: 768px) {
+/* Footer */
+@media (max-width: 600px) {
     .footer-widgets.widgets.widget-columns-3 {
         display: flex;
         flex-direction: column; /* mettre les widgets en colonne */

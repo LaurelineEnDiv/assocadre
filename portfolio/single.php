@@ -230,50 +230,41 @@
                 </div><!-- .entry-content -->
 
             <?php if ( option::get( 'layout_portfolio_post' ) !== 'full' ) : ?>
+            <?php $acf_exists = get_field('site_web') || get_field('imdb') || get_field('e_mail') || get_field('telephone') || get_field('specialite');?>
 
-                    <div class="entry_wrapper">
+            <div class="entry_wrapper portfolio-layout-3cols">
 
-    <div class="entry-content">
+    <div class="col-photo">
+        <?php the_post_thumbnail('medium', ['class' => 'portrait-photo']); ?>
+    </div>
+
+    <div class="col-content">
         <?php the_content(); ?>
     </div>
 
-    <div class="wpz_post_sidebar">
-
-        <?php 
-        $acf_exists = get_field('site_web') || get_field('imdb') || get_field('e_mail') || get_field('telephone') || get_field('specialite');
-
-        if ( $acf_exists ) : ?>
+    <div class="col-infos">
+        <?php if ($acf_exists) : ?>
             <div class="entry-details">
                 <div class="entry-meta">
                     <ul>
                         <?php if( get_field('specialite') ): ?>
-                            <li>
-                                <span class="portfolio_item-specialite">Spécialité</span>
-                                <?php echo get_field('specialite'); ?>
-                            </li>
+                            <li><strong>Spécialité</strong> : <?php echo get_field('specialite'); ?></li>
                         <?php endif; ?>
 
                         <?php if( get_field('site_web') ): ?>
                             <li>
-                                <span class="portfolio_item-siteweb">Site Web</span>
-                                <a href="<?php echo esc_url(get_field('site_web')); ?>" target="_blank">
-                                    <?php echo get_field('site_web'); ?>
-                                </a>
+                                <a href="<?php echo esc_url(get_field('site_web')); ?>" target="_blank">Voir mon site web</a>
                             </li>
                         <?php endif; ?>
 
                         <?php if( get_field('imdb') ): ?>
                             <li>
-                                <span class="portfolio_item-imdb">IMDB</span>
-                                <a href="<?php echo esc_url(get_field('imdb')); ?>" target="_blank">
-                                    <?php echo get_field('imdb'); ?>
-                                </a>
+                                <a href="<?php echo esc_url(get_field('imdb')); ?>" target="_blank">Lien IMDB</a>
                             </li>
                         <?php endif; ?>
 
                         <?php if( get_field('e_mail') ): ?>
-                            <li>
-                                <span class="portfolio_item-email">E-mail</span>
+                            <li><strong>E-mail</strong> :
                                 <a href="mailto:<?php echo antispambot(get_field('e_mail')); ?>">
                                     <?php echo antispambot(get_field('e_mail')); ?>
                                 </a>
@@ -281,23 +272,18 @@
                         <?php endif; ?>
 
                         <?php if( get_field('telephone') ): ?>
-                            <li>
-                                <span class="portfolio_item-telephone">Téléphone</span>
-                                <a href="tel:<?php echo preg_replace('/\D+/', '', get_field('telephone')); ?>">
-                                    <?php echo get_field('telephone'); ?>
-                                </a>
+                            <li><strong>Téléphone</strong> :
+                                <a href="tel:<?php echo preg_replace('/\D+/', '', get_field('telephone')); ?>"><?php echo get_field('telephone'); ?></a>
                             </li>
                         <?php endif; ?>
                     </ul>
                 </div>
             </div>
         <?php endif; ?>
+    </div>
 
-        <?php dynamic_sidebar( 'portfolio-sidebar' ); ?>
-    </div><!-- .wpz_post_sidebar -->
+</div>
 
-    <div class="clear"></div>
-</div><!-- .entry_wrapper -->
 
             <?php endif; ?>
 
