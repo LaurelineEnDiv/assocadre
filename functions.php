@@ -110,3 +110,124 @@ function shortcode_bibliographie() {
 }
 add_shortcode('bibliographie', 'shortcode_bibliographie');
 
+// Shortcode pour afficher la liste des podcasts
+function liste_podcasts_shortcode() {
+    ob_start();
+
+    $args = array(
+        'post_type'      => 'podcast',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC'
+    );
+
+    $podcasts = new WP_Query($args);
+
+    if ( $podcasts->have_posts() ) : ?>
+
+        <div class="articles-grid">
+            <ul class="articles-list">
+
+                <?php while ( $podcasts->have_posts() ) : $podcasts->the_post(); ?>
+
+                    <?php 
+                    $podcast_url = get_field('podcast_url'); 
+                    $description = get_field('description'); 
+                    $annee       = get_field('annee'); 
+                    ?>
+
+                    <li class="item-document">
+                        <h3 class="document-titre">
+                            <?php if ($podcast_url) : ?>
+                                <a href="<?php echo esc_url($podcast_url); ?>" target="_blank">
+                                    <?php the_title(); ?>
+                                </a>
+                            <?php else : ?>
+                                <?php the_title(); ?>
+                            <?php endif; ?>
+                        </h3>
+
+                        <?php if ($description) : ?>
+                            <p class="document-description"><?php echo esc_html($description); ?></p>
+                        <?php endif; ?>
+
+                        <?php if ($annee) : ?>
+                            <p class="document-annee"><strong>Année :</strong> <?php echo esc_html($annee); ?></p>
+                        <?php endif; ?>
+                    </li>
+
+                <?php endwhile; ?>
+
+            </ul>
+        </div>
+
+        <?php wp_reset_postdata();
+
+    else :
+        echo '<p>Aucun podcast disponible pour le moment.</p>';
+    endif;
+
+    return ob_get_clean();
+}
+add_shortcode('liste_podcasts', 'liste_podcasts_shortcode');
+
+
+
+// Shortcode pour afficher les entretiens audio
+function afficher_entretiens_audio_shortcode($atts) {
+
+    // Attributs du shortcode : nombre de posts à afficher
+    $atts = shortcode_atts( array(
+        'posts_per_page' => -1, // -1 pour tous
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ), $atts, 'entretiens_list' );
+
+    // Requête WP_Query
+    $query = new WP_Query(array(
+        'post_type' => 'entretiens',
+        'posts_per_page' => $atts['posts_per_page'],
+        'orderby' => $atts['orderby'],
+        'order' => $atts['order'],
+    ));
+
+    // Début du rendu HTML
+    $output = '<ul class="articles-list">';
+
+    if($query->have_posts()) {
+        while($query->have_posts()) {
+            $query->the_post();
+
+            // Récupère le champ audio ACF
+            $audio_url = get_field('audio');
+
+            $output .= '<li class="item-document">';
+            $output .= '<h3>' . get_the_title() . '</h3>';
+
+            if($audio_url) {
+                $output .= '<audio controls>
+                                <source src="' . esc_url($audio_url) . '" type="audio/m4a">
+                                Votre navigateur ne supporte pas le format audio.
+                            </audio>';
+            } else {
+                $output .= '<p>Aucune audio disponible.</p>';
+            }
+
+            $output .= '</li>';
+        }
+    } else {
+        $output .= '<p>Aucun entretien trouvé.</p>';
+    }
+
+    $output .= '</ul>';
+
+    wp_reset_postdata();
+
+    return $output;
+}
+
+// Enregistre le shortcode [entretiens_list]
+add_shortcode('entretiens_list', 'afficher_entretiens_audio_shortcode');
+
+
+

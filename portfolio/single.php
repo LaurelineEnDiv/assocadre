@@ -230,57 +230,80 @@
                 </div><!-- .entry-content -->
 
             <?php if ( option::get( 'layout_portfolio_post' ) !== 'full' ) : ?>
-            <?php $acf_exists = get_field('site_web') || get_field('imdb') || get_field('e_mail') || get_field('telephone') || get_field('specialite');?>
+            <?php $acf_exists = get_field('site_web') || get_field('imdb') || get_field('e_mail') || get_field('telephone') || get_field('specialite') || get_field('photo_1') || get_field('photo_2') || get_field('photo_3');?>
 
             <div class="entry_wrapper portfolio-layout-3cols">
 
-    <div class="col-photo">
-        <?php the_post_thumbnail('medium', ['class' => 'portrait-photo']); ?>
-    </div>
+                <div class="col-photo">
+                    <?php the_post_thumbnail('medium', ['class' => 'portrait-photo']); ?>
+                </div>
 
-    <div class="col-content">
-        <?php the_content(); ?>
-    </div>
+                <div class="col-content">
+                    <?php the_content(); ?>
+                </div>
 
-    <div class="col-infos">
-        <?php if ($acf_exists) : ?>
-            <div class="entry-details">
-                <div class="entry-meta">
-                    <ul>
-                        <?php if( get_field('specialite') ): ?>
-                            <li><strong>Spécialité</strong> : <?php echo get_field('specialite'); ?></li>
-                        <?php endif; ?>
+                <div class="col-infos">
+                    <?php if ($acf_exists) : ?>
+                        <div class="entry-details">
+                            <div class="entry-meta">
+                                <ul>
+                                    <?php if( get_field('specialite') ): ?>
+                                        <li><strong>Spécialité</strong> : <?php echo get_field('specialite'); ?></li>
+                                    <?php endif; ?>
 
-                        <?php if( get_field('site_web') ): ?>
-                            <li>
-                                <a href="<?php echo esc_url(get_field('site_web')); ?>" target="_blank">Voir mon site web</a>
-                            </li>
-                        <?php endif; ?>
+                                    <?php if( get_field('e_mail') ): ?>
+                                        <li><strong>E-mail</strong> :
+                                            <a href="mailto:<?php echo antispambot(get_field('e_mail')); ?>">
+                                                <?php echo antispambot(get_field('e_mail')); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
 
-                        <?php if( get_field('imdb') ): ?>
-                            <li>
-                                <a href="<?php echo esc_url(get_field('imdb')); ?>" target="_blank">Lien IMDB</a>
-                            </li>
-                        <?php endif; ?>
+                                    <?php if( get_field('telephone') ): ?>
+                                        <li><strong>Téléphone</strong> :
+                                            <a href="tel:<?php echo preg_replace('/\D+/', '', get_field('telephone')); ?>"><?php echo get_field('telephone'); ?></a>
+                                        </li>
+                                    <?php endif; ?>
 
-                        <?php if( get_field('e_mail') ): ?>
-                            <li><strong>E-mail</strong> :
-                                <a href="mailto:<?php echo antispambot(get_field('e_mail')); ?>">
-                                    <?php echo antispambot(get_field('e_mail')); ?>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                                    <?php if( get_field('site_web') ): ?>
+                                        <li>
+                                            <a href="<?php echo esc_url(get_field('site_web')); ?>" target="_blank">Voir mon site web</a>
+                                        </li>
+                                    <?php endif; ?>
 
-                        <?php if( get_field('telephone') ): ?>
-                            <li><strong>Téléphone</strong> :
-                                <a href="tel:<?php echo preg_replace('/\D+/', '', get_field('telephone')); ?>"><?php echo get_field('telephone'); ?></a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
+                                    <?php if( get_field('imdb') ): ?>
+                                        <li>
+                                            <a href="<?php echo esc_url(get_field('imdb')); ?>" target="_blank">Lien IMDB</a>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
-        <?php endif; ?>
-    </div>
+
+            <?php 
+            // Récupérer les images ACF (URL direct)
+            $photos = [
+                get_field('photo_1'),
+                get_field('photo_2'),
+                get_field('photo_3')
+            ];
+
+            // Filtrer les valeurs vides
+            $photos = array_filter($photos);
+
+            if ( !empty($photos) ) : ?>
+                <div class="portfolio-galerie">
+                    <?php foreach ($photos as $url) : ?>
+                        <div class="galerie-item">
+                            <img src="<?php echo esc_url($url); ?>" alt="">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
 
 </div>
 

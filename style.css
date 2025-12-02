@@ -10,6 +10,10 @@ Version: 1.0
 
 /**** GÉNÉRAL ********/
 
+/*.page .entry-content {
+    max-width: 1400px; 
+}*/
+
 .page .has-post-cover .entry-cover, .single-portfolio_item .has-post-cover .entry-cover, .single .has-post-cover .entry-cover {
   min-height: 250px;
   max-height: 500px;
@@ -20,11 +24,30 @@ Version: 1.0
 }
 
 
+/**** HEADER ********/
+.menu-primary-inspiro-container {
+    margin-right: 2em;
+}
+
+/* Cacher le bouton basculer le menu en mode desktop */
+@media (min-width: 1024px) {
+    .menu-toggle,
+    .navbar-toggle {
+        display: none !important;
+    }
+}
+
+
 /* Fixe la hauteur des images de la galerie photos */
 .wp-block-gallery .wp-block-image img {
     height: 250px;           /* Ajuste selon la hauteur souhaitée */
     width: 100%;
     object-fit: cover;       /* Recadre l'image sans déformation */
+}
+
+/* Affichage membres HP */
+.portfolio-showcase .portfolio-grid.portfolio_with_space {
+    margin-left: -5px;
 }
 
 /**** FICHE MEMBRE ********/
@@ -37,15 +60,19 @@ Version: 1.0
     margin-top: 40px;
 }
 
-/* Photo ronde */
 .portrait-photo {
-    width: 240px;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #eee;
+    width: 100%;
+    max-width: 280px;     /* limite largeur dans la colonne */
+    height: auto;         /* laisse la hauteur réelle s'adapter */
+    border-radius: 0;     /* supprime le cercle */
+    object-fit: contain;  /* ne coupe pas l'image */
     display: block;
     margin: 0 auto;
+    border: 2px solid #444;
+}
+
+.col-content {
+    color: #cccccc;
 }
 
 /* Sidebar infos */
@@ -67,6 +94,30 @@ Version: 1.0
     text-decoration: underline;
 }
 
+/* Galerie images supplémentaire */
+.portfolio-galerie {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.galerie-item img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.galerie-item img:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+}
+
+
 /* Responsive mobile */
 @media(max-width: 900px) {
     .portfolio-layout-3cols {
@@ -79,9 +130,24 @@ Version: 1.0
     }
 }
 
+@media(max-width: 900px) {
+    .portfolio-galerie {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 600px) {
+    .portfolio-galerie {
+        grid-template-columns: 1fr;
+    }
+}
+
+/************* ACTUALITÉS *************/
 
 
-/************* Articles & Dossiers — style épuré *************/
+
+
+/************* Articles & Dossiers  *************/
 
 .articles-list,
 .articles-list ul {
@@ -98,8 +164,14 @@ Version: 1.0
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 26px;
+}
+
+@media (max-width: 900px) {
+    .articles-list {
+        grid-template-columns: 1fr; /* 1 colonne en tablette + mobile */
+    }
 }
 
 /* Retirer les puces globalement pour la liste */
@@ -111,19 +183,18 @@ Version: 1.0
 .item-document {
     padding: 10px 0;
     border-bottom: 1px solid #dddddd;
-    transition: color .25s ease, transform .25s ease;
-}
-
-.item-document:last-child {
-    border-bottom: none;
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 
 /* Animation légère au survol */
 .item-document:hover {
-    transform: translateX(4px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/******* Bibliographie*********/
+
+
+/******* Bibliographie — version sombre *********/
 
 .bibliographie-grid {
     display: grid;
@@ -132,18 +203,24 @@ Version: 1.0
     margin-top: 40px;
 }
 
+/* Cartes des livres */
 .livre-item {
     padding: 18px;
-    border: 1px solid #ddd;
+    border: 1px solid #555;           /* bordure plus sombre pour contraste */
     border-radius: 12px;
-    background: #fff;
+    background: #1b1b1b;              /* fond des cartes légèrement plus clair que le noir du background */
     transition: transform .3s ease, box-shadow .3s ease;
 }
 
 .livre-item:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5); /* ombre plus visible sur fond sombre */
 }
+
+.livre-item:hover .livre-titre {
+    color: #55AAA4;
+}
+
 
 /* Wrapper de l'image */
 .livre-image-wrapper {
@@ -153,6 +230,8 @@ Version: 1.0
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-radius: 10px;
+    background: #111; /* léger fond pour détacher l'image */
 }
 
 /* Image du livre */
@@ -166,18 +245,34 @@ Version: 1.0
 /* Titres / textes */
 .livre-titre {
     font-size: 18px;
-}
-
-.entry-content p {
-  margin-bottom: 2px;
-  word-wrap: break-word;
+    color: #ffffff;  /* texte blanc pour contraster sur fond sombre */
+    margin-top: 12px;
 }
 
 .livre-auteur,
 .livre-annee,
 .livre-description {
     margin: 2px 0;
+    color: #cccccc;  /* gris clair pour sous-texte */
+    font-size: 14px;
 }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .bibliographie-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .bibliographie-grid {
+        grid-template-columns: 1fr;
+    }
+    .livre-image-wrapper {
+        height: 250px;
+    }
+}
+
 
 /***** FOOTER *******/
 
