@@ -235,7 +235,7 @@
             <div class="entry_wrapper portfolio-layout-3cols">
 
                 <div class="col-photo">
-                    <?php the_post_thumbnail('medium', ['class' => 'portrait-photo']); ?>
+                    <?php the_post_thumbnail('large', ['class' => 'portrait-photo']); ?>
                 </div>
 
                 <div class="col-content">

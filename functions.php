@@ -4,6 +4,8 @@ function inspiro_child_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'inspiro_child_enqueue_styles' );
 
+
+
 //////// LISTE DES PDF//////////
 function liste_documents_shortcode() {
 
@@ -242,64 +244,6 @@ function liste_podcasts_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('liste_podcasts', 'liste_podcasts_shortcode');
-
-
-
-// Shortcode pour afficher les entretiens audio
-function afficher_entretiens_audio_shortcode($atts) {
-
-    // Attributs du shortcode : nombre de posts à afficher
-    $atts = shortcode_atts( array(
-        'posts_per_page' => -1, // -1 pour tous
-        'orderby' => 'date',
-        'order' => 'DESC',
-    ), $atts, 'entretiens_list' );
-
-    // Requête WP_Query
-    $query = new WP_Query(array(
-        'post_type' => 'entretiens',
-        'posts_per_page' => $atts['posts_per_page'],
-        'orderby' => $atts['orderby'],
-        'order' => $atts['order'],
-    ));
-
-    // Début du rendu HTML
-    $output = '<ul class="articles-list">';
-
-    if($query->have_posts()) {
-        while($query->have_posts()) {
-            $query->the_post();
-
-            // Récupère le champ audio ACF
-            $audio_url = get_field('audio');
-
-            $output .= '<li class="item-document">';
-            $output .= '<h3>' . get_the_title() . '</h3>';
-
-            if($audio_url) {
-                $output .= '<audio controls>
-                                <source src="' . esc_url($audio_url) . '" type="audio/m4a">
-                                Votre navigateur ne supporte pas le format audio.
-                            </audio>';
-            } else {
-                $output .= '<p>Aucune audio disponible.</p>';
-            }
-
-            $output .= '</li>';
-        }
-    } else {
-        $output .= '<p>Aucun entretien trouvé.</p>';
-    }
-
-    $output .= '</ul>';
-
-    wp_reset_postdata();
-
-    return $output;
-}
-
-// Enregistre le shortcode [entretiens_list]
-add_shortcode('entretiens_list', 'afficher_entretiens_audio_shortcode');
 
 
 

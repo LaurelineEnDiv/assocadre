@@ -50,11 +50,41 @@ Version: 1.0
     margin-left: -5px;
 }
 
+.portfolio-archive-taxonomies { 
+    display: none !important; 
+}
+
+.portfolio_item_top_wrap {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/**** PAGE MEMBRES ********/
+
+.portfolio-with-post-cover .entry-cover {
+  min-height: 350px;
+}
+
+.portfolio-with-post-cover .portfolio-header-info {
+  padding: 150px 0;
+}
+
+.inner-wrap.portfolio_template_clean {
+  margin: 40px 0 40px 0;
+}
+
+.portfolio_item-title:hover {
+    color: #55AAA4;
+}
+
+
+
+
 /**** FICHE MEMBRE ********/
 
 .portfolio-layout-3cols {
     display: grid;
-    grid-template-columns: 260px 1fr 280px;
+    grid-template-columns: 33% 1fr 28%;
     gap: 40px;
     align-items: start;
     margin-top: 40px;
@@ -62,12 +92,9 @@ Version: 1.0
 
 .portrait-photo {
     width: 100%;
-    max-width: 280px;     /* limite largeur dans la colonne */
-    height: auto;         /* laisse la hauteur réelle s'adapter */
-    border-radius: 0;     /* supprime le cercle */
-    object-fit: contain;  /* ne coupe pas l'image */
-    display: block;
-    margin: 0 auto;
+    height: 360px;         /* laisse la hauteur réelle s'adapter */
+    border-radius: 10px;     /* supprime le cercle */
+    object-fit: cover;  /* ne coupe pas l'image */
     border: 2px solid #444;
 }
 
@@ -99,7 +126,7 @@ Version: 1.0
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
-    margin-top: 40px;
+    margin-top: 60px;
     margin-bottom: 60px;
 }
 
@@ -191,6 +218,8 @@ Version: 1.0
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+
 
 
 
